@@ -1,0 +1,706 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="经验,日常," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="难得的失败经历。">
+<meta name="keywords" content="经验,日常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次失败的触摸板驱动修复经历">
+<meta property="og:url" content="https://jerrulususu.github.io/blog/2017/06/22/记一次失败的触摸板驱动修复经历/index.html">
+<meta property="og:site_name" content="Jerry Lu&#39;s Thoughts">
+<meta property="og:description" content="难得的失败经历。">
+<meta property="og:updated_time" content="2017-07-10T16:01:27.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次失败的触摸板驱动修复经历">
+<meta name="twitter:description" content="难得的失败经历。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jerrulususu.github.io/blog/2017/06/22/记一次失败的触摸板驱动修复经历/"/>
+
+
+
+
+
+  <title> 记一次失败的触摸板驱动修复经历 | Jerry Lu's Thoughts </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jerry Lu's Thoughts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">自言自语</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://jerrulususu.github.io/blog/blog/2017/06/22/记一次失败的触摸板驱动修复经历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jerry Lu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jerry Lu's Thoughts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                记一次失败的触摸板驱动修复经历
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-22T00:00:00+08:00">
+                2017-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>难得的失败经历。<br><a id="more"></a></p>
+<h2 id="前传"><a href="#前传" class="headerlink" title="前传"></a>前传</h2><p>在6/15第一次上船后，京东首次送到的笔记本（神舟战神Z6-KP5S1）的触摸板似乎不太正常，左上角区域的触摸板虽然触摸了但是完全不会有任何反应，用自带驱动中的 <code>MoodPad</code> 观察现象相同，左上角一片完全是黑的，于是果断换货，6/21收到换货后的笔记本，这次的触摸板总算是正常了，检测无事后选择收货确认。</p>
+<h2 id="序章"><a href="#序章" class="headerlink" title="序章"></a>序章</h2><p>在调教一天，常用软件基本配置完毕之后，奇怪的问题出现了：触摸板的设置消失了。具体来说，托盘区域没有那个按一下会出现一个绿色圆点的触摸板图标，在电脑控制面板里鼠标设置中连 <code>装置设定值</code>一项也神奇的消失了。总而言之，完全无法设置触摸板，只能把它当作一个普通的鼠标来对待。</p>
+<h2 id="重装驱动？"><a href="#重装驱动？" class="headerlink" title="重装驱动？"></a>重装驱动？</h2><p>遇到这种问题，经验丰富的电脑用户第一时间想到的当然是驱动问题，这也是网上大多数用户的首选。方向确定后操作就很轻车熟路了：先卸载掉系统中已有的驱动，然后再安装新版的驱动。但问题依然没有解决：无论是</p>
+<ol>
+<li>神船的自带驱动<blockquote>
+<p>在 <code>C:/Win10Drivers</code> 下的那个<br>事实上版本号还新一点：19.3.4.31</p>
+</blockquote>
+</li>
+<li>Synaptic 官网提供的那个<blockquote>
+<p>版本号：19.0.19.1</p>
+</blockquote>
+</li>
+</ol>
+<p>都能够正常完成安装程序，但是设置项还是完全找不到。看来这一问题不是普通的重装驱动可以解决的了。<br>随后我又试过从<code>设备管理器</code>中直接<code>更新驱动程序</code>，然后手动选择 Windows 自带的 Synpatic 驱动，虽然操作能完成，但还是没有起效。</p>
+<blockquote>
+<p>注：<code>PS/2</code>的两个安装完后触摸板直接失效，<code>SMBus</code>安装完后还能用。</p>
+</blockquote>
+<h2 id="重装系统？"><a href="#重装系统？" class="headerlink" title="重装系统？"></a>重装系统？</h2><p>算了吧，系统都基本上配置完了，现在重装未免有些得不偿失，把它作为下下策吧。</p>
+<blockquote>
+<p>附注：这一问题似乎在我首次收到的那台神舟上就已经出现了，当时也是完全找不到设置项，最后 <code>MoodPad</code> 还是从程序文件夹里面翻出来的。</p>
+</blockquote>
+<h2 id="直接从程序文件夹启动？"><a href="#直接从程序文件夹启动？" class="headerlink" title="直接从程序文件夹启动？"></a>直接从程序文件夹启动？</h2><p>残念。这一方法一开始就想到了。根据我之前使用的那台联想笔记本，触摸板设定的主程序位于 <code>C:\Program Files\Synaptics\SynTP</code> 下的 <code>SynTPEnh.exe</code>。 但是无论是直接双击启动还是右键管理员权限启动都无法出现图形界面，虽然能在任务管理器里面看到运行。</p>
+<h2 id="改注册表？"><a href="#改注册表？" class="headerlink" title="改注册表？"></a>改注册表？</h2><p>鉴于我原先使用的那台联想笔记本的触摸板设定可以正常找到，神船和联想的触摸板又都是 Synaptic 的 TouchPad 系列，反正现在也没什么办法，不如死马当活马医的试试看。<br>在网络上的一番查询后，找到了一个看似相关的键值如下，</p>
+<pre><code>[HKEY_LOCAL_MACHINE\SOFTWARE\Synaptics\SynTPEnh]
+&quot;ShowDisableIcon&quot;=dword:00000001
+</code></pre><p>但这一操作完成并重启后，虽然任务栏出现了图标，但是点上去无论是选择<code>触控板属性</code>还是选择<code>定点装置属性</code>，迎接我们的都是相同且属性的<code>鼠标</code>设置页面。还是没有起作用。<br>随后又翻到一个相关键值</p>
+<pre><code>[HKEY_CURRENT_USER\Software\Synaptics\SynTPEnh]
+&quot;DisableIntPDFeature&quot;=dword:00000003
+</code></pre><p>这个就更惨了，重启后一点结果都没有。</p>
+<h2 id="改-BIOS-？"><a href="#改-BIOS-？" class="headerlink" title="改 BIOS ？"></a>改 BIOS ？</h2><p>在某国外论坛中看到一招，贴主先进 BIOS 关闭了触摸板，然后卸载驱动，再进入 BIOS 重新开启触摸板，让系统自动发现。兴冲冲的重启，然而发现神船的 BIOS 除了改一下启动顺序基本上做不了什么。此路不通。</p>
+<h2 id="放弃治疗"><a href="#放弃治疗" class="headerlink" title="放弃治疗"></a>放弃治疗</h2><p>一个下午的 Google 和百度过后，我筋疲力竭，最后选择放弃治疗。无论是国外还是国内，遇到此问题的人都不在少数，然而大部分回复都是以重装驱动为主。事实上经过测试，在驱动安装完成后，虽然找不到配置界面，但是类似于<code>双指自然滚动</code>、<code>三指上推出任务视图</code>、<code>三只下推所有程序最小化</code> 之类的操作还是能够成功的，就姑且这样吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/经验/" rel="tag"># 经验</a>
+          
+            <a href="/blog/tags/日常/" rel="tag"># 日常</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/06/22/备忘：重装系统后需要重新安装的程序/" rel="next" title="备忘：重装系统后需要重新安装的程序">
+                <i class="fa fa-chevron-left"></i> 备忘：重装系统后需要重新安装的程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/06/22/幸运星真是太萌了！大赞！/" rel="prev" title="幸运星真是太萌了！大赞！">
+                幸运星真是太萌了！大赞！ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="Jerry Lu" />
+          <p class="site-author-name" itemprop="name">Jerry Lu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前传"><span class="nav-number">1.</span> <span class="nav-text">前传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序章"><span class="nav-number">2.</span> <span class="nav-text">序章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重装驱动？"><span class="nav-number">3.</span> <span class="nav-text">重装驱动？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重装系统？"><span class="nav-number">4.</span> <span class="nav-text">重装系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接从程序文件夹启动？"><span class="nav-number">5.</span> <span class="nav-text">直接从程序文件夹启动？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改注册表？"><span class="nav-number">6.</span> <span class="nav-text">改注册表？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改-BIOS-？"><span class="nav-number">7.</span> <span class="nav-text">改 BIOS ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放弃治疗"><span class="nav-number">8.</span> <span class="nav-text">放弃治疗</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry Lu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
